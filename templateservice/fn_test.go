@@ -1,4 +1,4 @@
-package templateService
+package templateservice
 
 import (
 	"io/ioutil"

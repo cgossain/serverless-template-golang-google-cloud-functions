@@ -3,12 +3,14 @@ service: templateservice
 provider:
   name: google
   runtime: go113
+  stage: ${opt:stage, 'dev'}
+  region: us-central1
   project: my-gcp-project-name
   credentials: ~/.gcloud/keyfile.json
 
 plugins:
   - serverless-google-cloudfunctions
-
+  - serverless-plugin-scripts
 package:
   exclude:
     - .gitignore
@@ -19,6 +21,10 @@ functions:
     handler: Hello
     events:
       - http: path # https://www.serverless.com/framework/docs/providers/google/events/http#http-events
+    # unofficial flag that ties into the post-deploy script; set to false or omit the key if you
+    # don't want to make the function public; you will need to run the `sls-update-allow-unauthenticated.sh`
+    # script to update the function permissions
+    allowUnauthenticated: true
   # NOTE: the following uses an "event" event (pubSub event in this case).
   # Please create the corresponding resources in the Google Cloud
   # before deploying this service through Serverless
@@ -36,3 +42,15 @@ functions:
 #      name: my-serverless-service-bucket
 #  imports:
 #    - path: my_template.jinja
+
+custom:
+  scripts:
+    commands:
+      # make the specified function public
+      mkfunc-pub: gcloud functions add-iam-policy-binding ${self:service}-${self:provider.stage}-${opt:function, ""} --member="allUsers" --role="roles/cloudfunctions.invoker" --project=${self:provider.project} --region=${self:provider.region}
+      # make the specified function private
+      mkfunc-pvt: gcloud functions remove-iam-policy-binding ${self:service}-${self:provider.stage}-${opt:function, ""} --member="allUsers" --role="roles/cloudfunctions.invoker" --project=${self:provider.project} --region=${self:provider.region}
+    # NOTE: uncomment the following if you want the `sls-update-allow-unauthenticated.sh` script to
+    # run after every deploy. Otherwise just run the script manually.
+    # hooks:
+    #   "after:deploy:deploy": ../scripts/sls-update-allow-unauthenticated.sh
