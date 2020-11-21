@@ -16,6 +16,18 @@ The `go.mod` file also resides in the root directory.
 
 ## Start a new project from the template
 
+### Option 1 (use script):
+
+Call the included `bootstrap-new-project.sh` script from the directory that will contain your project directory:
+
+```
+./path/to/script/bootstrap-new-project.sh myprojectname myfirstservicename
+```
+
+Note: You can omit the second argument (i.e. myfirstservicename) if you only want to create the project without creating a new service yet.
+
+### Option 2 (manually):
+
 1. Clone the template repo into a new local project folder:
 
 <pre>
@@ -34,7 +46,15 @@ go 1.13
 
 Create a directory (i.e. package) for each logical microservice you intend to deploy. Each microservice could be made up of a single or several cloud functions.
 
-### TL;DR:
+### Option 1 (use script):
+
+Call the included `bootstrap-new-service.sh` script from the projects root directory:
+
+```
+./path/to/script/bootstrap-new-service.sh mynewservice
+```
+
+### Option 2 (manually):
 
 1. From the root directory, make a copy of the `templateservice` directory and rename it to match your microservice/package name:
 
@@ -122,13 +142,13 @@ The included `serverless.yml` file uses the `serverless-plugin-scripts` plugin a
 To make a function public, run the following from within your microservice/package directory:
 
 ```
-npx sls mkfunc-pub --function=hello
+sls mkfunc-pub --function=hello
 ```
 
 To make a function private, run the following from within your microservice/package directory:
 
 ```
-npx sls mkfunc-pvt --function=hello
+sls mkfunc-pvt --function=hello
 ```
 
 ### Update via script

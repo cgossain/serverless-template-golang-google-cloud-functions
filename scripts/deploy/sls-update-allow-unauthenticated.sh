@@ -4,6 +4,9 @@
 functions=$(sls print --path functions --transform keys --format text | xargs)
 
 # Sort functions as public and private
+echo "-------------------------------------------------------------------------"
+echo "sorting functions as public or private"
+echo "-------------------------------------------------------------------------"
 pub=()
 prv=()
 for fn in ${functions[@]}; do
@@ -14,15 +17,24 @@ for fn in ${functions[@]}; do
         prv+=($fn)
     fi
 done
+echo "done"
 
 # Run the mkfunc-pub command for each public function
+echo "-------------------------------------------------------------------------"
+echo "updating public functions"
+echo "-------------------------------------------------------------------------"
 for fn in ${pub[@]}; do
     echo "Making function \""$fn"\" public..."
     sls mkfunc-pub --function="$fn"
 done
+echo "done"
 
+echo "-------------------------------------------------------------------------"
+echo "updating private functions"
+echo "-------------------------------------------------------------------------"
 # Run the mkfunc-pvt command for each private function
 for fn in ${prv[@]}; do
     echo "Making function \""$fn"\" private..."
     sls mkfunc-pvt --function="$fn"
 done
+echo "done"
