@@ -18,11 +18,11 @@ done
 # Run the mkfunc-pub command for each public function
 for fn in ${pub[@]}; do
     echo "Making function \""$fn"\" public..."
-    npx sls mkfunc-pub --function="$fn"
+    sls mkfunc-pub --function="$fn"
 done
 
 # Run the mkfunc-pvt command for each private function
 for fn in ${prv[@]}; do
     echo "Making function \""$fn"\" private..."
-    npx sls mkfunc-pvt --function="$fn"
+    sls mkfunc-pvt --function="$fn"
 done
