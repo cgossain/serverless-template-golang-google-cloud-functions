@@ -10,31 +10,39 @@ This template project is designed to be used as a starting point for a Google Cl
 
 ## Project structure
 
-This template assumes that each logical microservice will be contained in its own package/directory and deployed separately using its own `serverless.yml` definition.
+A few notes about the project structure:
 
-Each package could contain one or more cloud functions.
-
-The `go.mod` file resides in the root project directory along with the `package.json` file which defines the Serverless Framework plugin dependencies.
+- The root directory contains a `package.json` file which defines dev dependencies needed to deploy functions using the Serverless Framework
+- This template assumes that each logical microservice will be contained within its own package/directory and deployed separately using its own `serverless.yml` definition
+- Each package/directory could contain one or more cloud functions, and has its own `go.mod` file to manage dependencies by microservice
+- This template includes a `.env` file which you can use to put environment variables used for local development as well as a `cmd` directory that contains a `main.go` file that starts up a server that you can use to test your functions locally
 
 <pre>
 .
 ├── ...
 ├── microservice1
-│   └── <b>fn_test.go</b>
-│   └── <b>fn.go</b>
-│   └── <b>serverless.yml</b>
+│   └── cmd
+│       └── main.go
+│   └── .env
+│   └── fn_test.go
+│   └── fn.go
+│   └── go.mod
+│   └── serverless.yml
 │   └── ...
 ├── microservice2
-│   └── <b>fn_test.go</b>
-│   └── <b>fn.go</b>
-│   └── <b>serverless.yml</b>
+│   └── cmd
+│       └── main.go
+│   └── .env
+│   └── fn_test.go
+│   └── fn.go
+│   └── go.mod
+│   └── serverless.yml
 │   └── ...
-├── go.mod
 ├── package.json
 ├── ...
 </pre>
 
-You can structure the code inside each package differently. This template uses a flat structure, but there are other options. Take a look at [this guide](https://cloud.google.com/functions/docs/writing#structuring_source_code) to learn more.
+Take a look at [this guide](https://cloud.google.com/functions/docs/writing#structuring_source_code) to learn more about structuring your code.
 
 ## Create a new project using the included scripts
 
@@ -76,6 +84,16 @@ provider:
 
 ...
 </pre>
+
+## Local testing
+
+For each microservice/package directory that you want to test, modify the server defined in `cmd/main.go` with routes to your functions (and provide any test payloads needed), then run the file:
+
+```
+go run main.go
+```
+
+Now call your functions.
 
 ## Deploy
 

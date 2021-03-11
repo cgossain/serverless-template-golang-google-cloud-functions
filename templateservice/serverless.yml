@@ -1,4 +1,5 @@
 service: templateservice
+useDotenv: true
 
 provider:
   name: google
