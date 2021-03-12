@@ -48,13 +48,21 @@ Take a look at [this guide](https://cloud.google.com/functions/docs/writing#stru
 
 ### 1. Bootstrap new project
 
-Copy the `bootstrap-new-project.sh` script (located under `/scripts/bootstrap/` of this repo) to the directory where you want to create your project, and run it.
-
+Download the `bootstrap-new-project.sh` script to the directory where you want to create your project:
 ```
-Arguments:
+curl https://raw.githubusercontent.com/cgossain/serverless-template-golang-google-cloud-functions/master/scripts/bootstrap/bootstrap-new-project.sh --output bootstrap-new-project.sh --silent
+```
+
+Make the script executable:
+```
+chmod +x bootstrap-new-project.sh
+```
+
+Then run it:
+```
+// Arguments:
 // $1 - Your github username (i.e. `cgossain`)
 // $2 - The name of your new project
-
 ./bootstrap-new-project.sh <mygithubusername> <myprojectname>
 ```
 
