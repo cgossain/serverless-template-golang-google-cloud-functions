@@ -175,12 +175,12 @@ To make a function private, run the following from within your microservice/pack
 sls mkfunc-pvt --function=hello
 ```
 
-### Update manually
+### Option 3: Update manually
 
 This can be done either through the console or the gcloud cli [as detailed here](https://cloud.google.com/run/docs/authenticating/public).
 
 
-## Appendix A: Create a new project manually
+## Appendix A: Create a new project manually from the template
 
 This section is included for completeness sake, but you should probably just use the above scripts instead.
 
