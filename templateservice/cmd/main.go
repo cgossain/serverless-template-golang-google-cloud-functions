@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/my-gcp-project-name/templateservice"
+	"github.com/my-github-username/my-gcp-project-name/templateservice"
 )
 
 func main() {

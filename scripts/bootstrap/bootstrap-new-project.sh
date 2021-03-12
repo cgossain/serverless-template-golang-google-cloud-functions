@@ -1,12 +1,16 @@
 #!/bin/bash
 
-# This script clones the template repository to a new folder matching the given project name.
-# $1 - the name of the new project
-# $2 - the name of the first service to create (optional)
-project_name=$1
+# This creates a new project from the template repository
+# $1 - your github username
+# $2 - the name of the new project
+# $3 - the name of the first service to create (optional)
+github_username=$1
+github_username_hook="my-github-username"
+
+project_name=$2
 project_name_hook="my-gcp-project-name"
 
-service_name=$2
+service_name=$3
 
 echo "-------------------------------------------------------------------------"
 echo "configuration"
@@ -23,12 +27,15 @@ echo "-------------------------------------------------------------------------"
 echo "cloning template"
 echo "-------------------------------------------------------------------------"
 # Clone the template into the project directory
-git clone https://github.com/cgossain/serverless-google-cloud-functions-golang-template.git $project_name
+git clone --depth 1 https://github.com/cgossain/serverless-google-cloud-functions-golang-template.git $project_name
 
-# Remove `origin` remove from the cloned repository
-git --git-dir $project_name/.git remote remove origin
+# Remove the `origin` remote from the cloned repository
+git --git-dir="$project_name/.git" remote remove origin
 
-# Replace all occurences of the project name hook with the given project name
+# Replace all occurences of the `github_username_hook` with the actual github username
+find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "*" -type f -print | LC_ALL=C xargs sed -i '' -e "s:$github_username_hook:$github_username:g"
+
+# Replace all occurences of the `project_name_hook` with the actual project name
 find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "*" -type f -print | LC_ALL=C xargs sed -i '' -e "s:$project_name_hook:$project_name:g"
 
 echo "done"
@@ -38,6 +45,17 @@ echo "installing serverless plugins"
 echo "-------------------------------------------------------------------------"
 # Run "npm install" from the project directory
 find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "package.json" -execdir npm install \;
+
+echo "done"
+
+echo "-------------------------------------------------------------------------"
+echo "commiting changes"
+echo "-------------------------------------------------------------------------"
+# Stage all the above changes
+find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "package.json" -execdir git add . \;
+
+# Rename latest(i.e. `--depth 1`)/initial commit
+git --git-dir="$project_name/.git" commit --amend -m "Initial commit"
 
 echo "done"
 

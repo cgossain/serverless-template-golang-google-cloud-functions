@@ -48,15 +48,15 @@ Take a look at [this guide](https://cloud.google.com/functions/docs/writing#stru
 
 ### 1. Bootstrap new project
 
-Copy the `/scripts/bootstrap/bootstrap-new-project.sh` script to the directory where you want to create your project, and run it.
+Copy the `bootstrap-new-project.sh` script (located under `/scripts/bootstrap/` of this repo) to the directory where you want to create your project, and run it.
 
 ```
-// The first argument is the name of your new project
+Arguments:
+// $1 - Your github username (i.e. `cgossain`)
+// $2 - The name of your new project
+// $3 - (Optional) The name of the first microservice package you want to create (just runs the script in step 2)
 
-// The second argument is optional and represents the 
-// name of the first microservice you want to create
-
-./bootstrap-new-project.sh <myprojectname> <myfirstservicename>
+./bootstrap-new-project.sh <mygithubusername> <myprojectname> <myfirstservicename>
 ```
 
 ### 2. Create a new microservice/package
@@ -190,10 +190,10 @@ This section is included for completeness sake, but you should probably just use
 git clone https://github.com/cgossain/serverless-google-cloud-functions-golang-template.git <b>my-gcp-project-name</b>
 </pre>
 
-2. Update `go.mod` in the root directory with your project name. For example:
+2. Update `go.mod` in the root directory with your module path. For example:
 
 <pre>
-module github.com/<b>my-gcp-project-name</b>
+module github.com/my-github-username/my-gcp-project-name
 
 go 1.13
 </pre>
