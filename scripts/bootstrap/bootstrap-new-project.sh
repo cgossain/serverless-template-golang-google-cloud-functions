@@ -25,6 +25,9 @@ echo "-------------------------------------------------------------------------"
 # Clone the template into the project directory
 git clone https://github.com/cgossain/serverless-google-cloud-functions-golang-template.git $project_name
 
+# Remove `origin` remove from the cloned repository
+git --git-dir $project_name/.git remote remove origin
+
 # Replace all occurences of the project name hook with the given project name
 find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "*" -type f -print | LC_ALL=C xargs sed -i '' -e "s:$project_name_hook:$project_name:g"
 
