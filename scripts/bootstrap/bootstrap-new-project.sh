@@ -59,7 +59,7 @@ git --git-dir="$project_name/.git" commit --amend -m "Initial commit"
 
 echo "done"
 
-# Create an initial service if a value was provided
+# Create the first service if a value was provided
 if [[ ! -z "$service_name" ]]; then
     # Run the "bootstrap-new-service.sh" scriptfrom the project directory
     find ./$project_name ! -path "*/node_modules/*" ! -path "*/scripts/*" -name "package.json" -execdir ./scripts/bootstrap/bootstrap-new-service.sh "$service_name" \;
