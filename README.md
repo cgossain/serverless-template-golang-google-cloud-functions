@@ -54,36 +54,36 @@ Copy the `bootstrap-new-project.sh` script (located under `/scripts/bootstrap/` 
 Arguments:
 // $1 - Your github username (i.e. `cgossain`)
 // $2 - The name of your new project
-// $3 - (Optional) The name of the first microservice package you want to create (just runs the script in step 2)
 
-./bootstrap-new-project.sh <mygithubusername> <myprojectname> <myfirstservicename>
+./bootstrap-new-project.sh <mygithubusername> <myprojectname>
 ```
 
-### 2. Create a new microservice/package
+### 2. Review the `serverless.yml` file of the templateservice
 
-Run the `/scripts/bootstrap/bootstrap-new-service.sh` script from your projects' root directory to create a new microservice package.
-
-```
-./scripts/bootstrap/bootstrap-new-service.sh <mynewservicename>
-```
-
-### 3. Review your `serverless.yml` file
-
-Navigate to the microservice/package directory you just created, and verify the following in your `serverless.yml` file:
+Navigate to the microservice/package directory of the templateservice, and verify the following in the `serverless.yml` file:
 1. Make sure the `provider.project` field matches the project ID of your GCP project
 2. Make sure the `provider.credentials` field matches your json keyfile
 
 <pre>
-service: <b>mynewservice</b>
+service: templateservice
+useDotenv: true
 
 provider:
   name: google
   runtime: go113
-  <b>project: gcp-project-id</b> # defaults to the project name
-  <b>credentials: ~/.gcloud/keyfile.json</b> # https://www.serverless.com/framework/docs/providers/google/guide/credentials/
+  project: <b>gcp-project-id</b> # defaults to the project name
+  credentials: <b>~/.gcloud/keyfile.json</b> # https://www.serverless.com/framework/docs/providers/google/guide/credentials/
 
 ...
 </pre>
+
+### 3. Create a new microservice/package
+
+Run the `/scripts/bootstrap/bootstrap-new-service.sh` script from your projects' root directory to create a new microservice package from the templateservice.
+
+```
+./scripts/bootstrap/bootstrap-new-service.sh <mynewservicename>
+```
 
 ## Local testing
 
@@ -216,12 +216,13 @@ package <b>mynewservice</b>
 
 <pre>
 service: <b>mynewservice</b>
+useDotenv: true
 
 provider:
   name: google
   runtime: go113
-  <b>project: gcp-project-id</b>
-  <b>credentials: ~/.gcloud/keyfile.json</b> # https://www.serverless.com/framework/docs/providers/google/guide/credentials/
+  project: <b>gcp-project-id</b>
+  credentials: <b>~/.gcloud/keyfile.json</b> # https://www.serverless.com/framework/docs/providers/google/guide/credentials/
 
 plugins:
   - serverless-google-cloudfunctions
