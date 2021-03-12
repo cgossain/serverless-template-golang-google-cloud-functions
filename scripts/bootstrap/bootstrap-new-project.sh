@@ -27,7 +27,7 @@ echo "-------------------------------------------------------------------------"
 echo "cloning template"
 echo "-------------------------------------------------------------------------"
 # Clone the template into the project directory
-git clone --depth 1 https://github.com/cgossain/serverless-google-cloud-functions-golang-template.git $project_name
+git clone --depth 1 https://github.com/cgossain/serverless-template-golang-google-cloud-functions.git $project_name
 
 # Remove the `origin` remote from the cloned repository
 git --git-dir="$project_name/.git" remote remove origin

@@ -1,4 +1,4 @@
-# Serverless Google Cloud Functions Golang Template
+# Serverless Template - Golang + Google Cloud Functions
 
 This template project is designed to be used as a starting point for a Google Cloud Functions project using the Golang runtime and the Serverless Framework.
 
