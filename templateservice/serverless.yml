@@ -8,6 +8,7 @@ provider:
   region: us-central1
   project: my-gcp-project-name
   credentials: ~/.gcloud/keyfile.json
+  lambdaHashingVersion: 20201221
 
 plugins:
   - serverless-google-cloudfunctions
